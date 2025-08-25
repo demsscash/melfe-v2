@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr">
       <body className={inter.className}>
-        <SiteLoader minLoadingTime={2500} showWelcomeText={true}>
+        <SiteLoader minLoadingTime={2500} >
           <AuthProvider>
             <CartProvider>  {/* 🆕 Nouveau */}
               <div className="min-h-screen flex flex-col">
