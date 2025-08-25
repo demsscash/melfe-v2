@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { useCartActions } from '@/hooks/useCartSync';import { useHydration } from '@/hooks/useHydration';
+import { useCartActions } from '@/hooks/useCartSync'; import { useHydration } from '@/hooks/useHydration';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -347,9 +347,9 @@ export default function CheckoutPage() {
                                     {cart.items.map((item) => (
                                         <div key={item.id} className="flex items-center space-x-3">
                                             <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-100">
-                                                {item.images?.[0] && (
+                                                {item.image && (
                                                     <Image
-                                                        src={item.images[0].src}
+                                                        src={item.image}
                                                         alt={item.name}
                                                         fill
                                                         className="object-cover"
