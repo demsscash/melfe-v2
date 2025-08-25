@@ -1,6 +1,7 @@
 // src/app/boutique/page.tsx
 
 import { Suspense } from 'react';
+import React from 'react';
 import { Metadata } from 'next';
 import { WooCommerceService, WooCommerceCategory } from '@/lib/woocommerce';
 import ProductGrid from '@/components/product/ProductGrid';
@@ -33,7 +34,7 @@ interface BoutiquePageProps {
 
 export default async function BoutiquePageBoutiquePage({
     searchParams
-}: BoutiquePageProps): Promise<JSX.Element> {
+}: BoutiquePageProps) {
     const params = await searchParams;
     const page = Number(params.page) || 1;
     const categorySlug = params.category; // ✅ Récupéré depuis l'URL
