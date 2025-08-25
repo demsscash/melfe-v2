@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { WooCommerceProduct } from '@/types/woocommerce';
-import { useCartActions } from '@/hooks/useCartSync';import { formatPrice, isOnSale, getDiscountPercentage } from '@/lib/woocommerce';
+import { useCartActions } from '@/hooks/useCartSync'; import { formatPrice, isOnSale, getDiscountPercentage } from '@/lib/woocommerce';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Eye, ShoppingBag, Heart } from 'lucide-react';
@@ -27,7 +27,7 @@ export default function ProductCard({
     product,
     className = '',
     showQuickView = true
-}: ProductCardProps): JSX.Element {
+}: ProductCardProps) {
     const { addToCart, isInCart } = useCart();
     const [isHovered, setIsHovered] = useState(false);
     const [selectedColor, setSelectedColor] = useState<string | null>(null);

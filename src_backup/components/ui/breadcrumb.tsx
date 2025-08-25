@@ -14,7 +14,7 @@ interface BreadcrumbProps {
     className?: string
 }
 
-export default function Breadcrumb({ items, className }: BreadcrumbProps): JSX.Element {
+export default function Breadcrumb({ items, className }: BreadcrumbProps) {
     return (
         <nav aria-label="Breadcrumb" className={cn("flex", className)}>
             <ol className="inline-flex items-center space-x-1 md:space-x-3">

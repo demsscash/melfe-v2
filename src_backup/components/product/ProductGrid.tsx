@@ -20,7 +20,7 @@ export default function ProductGrid({
     hasMore = false,
     className = '',
     viewMode = 'grid'
-}: ProductGridProps): JSX.Element {
+}: ProductGridProps) {
 
     if (products.length === 0) {
         return (

@@ -19,7 +19,7 @@ export default function RelatedProducts({
     products,
     title = "Produits similaires",
     className = ''
-}: RelatedProductsProps): JSX.Element {
+}: RelatedProductsProps) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);

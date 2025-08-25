@@ -85,7 +85,7 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="fr" className={cn(inter.variable, 'scroll-smooth')}>
       <head>

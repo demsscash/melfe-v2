@@ -197,7 +197,7 @@ export default async function HomePage(): Promise<JSX.Element> {
 }
 
 // Composant de skeleton pour le chargement
-function ProductGridSkeleton(): JSX.Element {
+function ProductGridSkeleton() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {[...Array(8)].map((_, i) => (

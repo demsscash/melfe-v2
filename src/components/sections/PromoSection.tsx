@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
 
-export default function PromoSection(): JSX.Element {
+export default function PromoSection() {
     return (
         <section className="relative py-20 overflow-hidden">
             {/* Background avec dégradé */}

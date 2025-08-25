@@ -4,7 +4,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCartActions } from '@/hooks/useCartSync';import { formatPrice } from '@/lib/woocommerce';
+import { useCartActions } from '@/hooks/useCartSync'; import { formatPrice } from '@/lib/woocommerce';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -57,7 +57,7 @@ interface CheckoutFormData {
     paymentMethod: 'card' | 'cash' | 'transfer';
 }
 
-export default function CheckoutPage(): JSX.Element {
+export default function CheckoutPage() {
     const router = useRouter();
     const { cart, clearCart } = useCart();
     const [isLoading, setIsLoading] = useState(false);

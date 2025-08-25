@@ -80,7 +80,7 @@ export default function ProductFilters({
     currentCategory,
     currentFilter,
     currentSort = 'date-desc'
-}: ProductFiltersProps): JSX.Element {
+}: ProductFiltersProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 

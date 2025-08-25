@@ -28,7 +28,7 @@ export default function ProductCard({
     product,
     className = '',
     showQuickView = true
-}: ProductCardProps): JSX.Element {
+}: ProductCardProps) {
     const { addToCart, isInCart, getItemQuantity, updateQuantity, removeFromCart } = useCart();
     const [isHovered, setIsHovered] = useState(false);
     const [selectedColor, setSelectedColor] = useState<string | null>(null);
@@ -37,7 +37,7 @@ export default function ProductCard({
     const primaryImage = product.images?.[0]?.src || '/placeholder-product.jpg';
     const secondaryImage = product.images?.[1]?.src || primaryImage;
     const discountPercentage = getDiscountPercentage(product);
-    
+
     const productInCart = isInCart(product.id);
     const currentQuantity = getItemQuantity(product.id);
 
@@ -244,11 +244,11 @@ export default function ProductCard({
                             >
                                 <Minus className="w-3 h-3" />
                             </Button>
-                            
+
                             <span className="px-3 py-1 bg-gray-100 rounded text-sm font-medium min-w-[2rem] text-center">
                                 {currentQuantity}
                             </span>
-                            
+
                             <Button
                                 variant="outline"
                                 size="sm"
@@ -257,7 +257,7 @@ export default function ProductCard({
                             >
                                 <Plus className="w-3 h-3" />
                             </Button>
-                            
+
                             <Button
                                 variant="outline"
                                 size="sm"

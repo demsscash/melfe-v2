@@ -53,7 +53,7 @@ const socialLinks = [
     { name: 'YouTube', href: '#', icon: Youtube },
 ];
 
-export default function Footer(): JSX.Element {
+export default function Footer() {
     const [email, setEmail] = useState('');
     const [isSubscribed, setIsSubscribed] = useState(false);
 

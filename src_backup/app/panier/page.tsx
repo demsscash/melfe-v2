@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useCartActions } from '@/hooks/useCartSync';import { formatPrice } from '@/lib/woocommerce';
+import { useCartActions } from '@/hooks/useCartSync'; import { formatPrice } from '@/lib/woocommerce';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -23,7 +23,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
-export default function CartPage(): JSX.Element {
+export default function CartPage() {
     const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
     const [promoCode, setPromoCode] = useState('');
     const [isPromoApplied, setIsPromoApplied] = useState(false);

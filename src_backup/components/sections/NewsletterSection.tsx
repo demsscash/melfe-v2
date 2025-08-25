@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, CheckCircle } from 'lucide-react';
 
-export default function NewsletterSection(): JSX.Element {
+export default function NewsletterSection() {
     const [email, setEmail] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);

@@ -29,7 +29,7 @@ export default function ProductImageGallery({
     isOnSale = false,
     discountPercentage = 0,
     isFeatured = false,
-}: ProductImageGalleryProps): JSX.Element {
+}: ProductImageGalleryProps) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isWishlisted, setIsWishlisted] = useState(false);
 

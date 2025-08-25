@@ -4,7 +4,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useCartActions } from '@/hooks/useCartSync';import { ShoppingBag, Menu, X, Search, User } from 'lucide-react';
+import { useCartActions } from '@/hooks/useCartSync'; import { ShoppingBag, Menu, X, Search, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -25,7 +25,7 @@ const navigation: NavigationItem[] = [
     { name: 'Accessoires', href: '/accessoires' },
 ];
 
-export default function Header(): JSX.Element {
+export default function Header() {
     const { getItemCount } = useCart();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -43,8 +43,8 @@ export default function Header(): JSX.Element {
     return (
         <header
             className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled
-                    ? 'bg-white/98 backdrop-blur-xl shadow-sm border-b border-black/5'
-                    : 'bg-white/95 backdrop-blur-xl border-b border-black/5'
+                ? 'bg-white/98 backdrop-blur-xl shadow-sm border-b border-black/5'
+                : 'bg-white/95 backdrop-blur-xl border-b border-black/5'
                 }`}
         >
             <div className="max-w-[1400px] mx-auto px-6">

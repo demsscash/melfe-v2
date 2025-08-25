@@ -4,7 +4,7 @@
 
 import { useState } from 'react';
 import { WooCommerceProduct } from '@/types/woocommerce';
-import { useCartActions } from '@/hooks/useCartSync';import { formatPrice, isOnSale, getDiscountPercentage } from '@/lib/woocommerce';
+import { useCartActions } from '@/hooks/useCartSync'; import { formatPrice, isOnSale, getDiscountPercentage } from '@/lib/woocommerce';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -44,7 +44,7 @@ interface SizeOption {
     available: boolean;
 }
 
-export default function ProductInfo({ product }: ProductInfoProps): JSX.Element {
+export default function ProductInfo({ product }: ProductInfoProps) {
     const { addToCart, isInCart, getItemQuantity } = useCart();
     const [selectedColor, setSelectedColor] = useState<string>('');
     const [selectedSize, setSelectedSize] = useState<string>('');
@@ -376,7 +376,7 @@ function getColorHex(colorName: string): string {
     return colorMap[colorName.toLowerCase()] || '#9ca3af';
 }
 
-function Label({ children, className = '' }: { children: React.ReactNode; className?: string }): JSX.Element {
+function Label({ children, className = '' }: { children: React.ReactNode; className?: string }) {
     return (
         <label className={cn('block text-sm font-medium text-gray-900', className)}>
             {children}
