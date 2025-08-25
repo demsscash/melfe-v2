@@ -4,6 +4,7 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { useCartActions } from '@/hooks/useCartSync';
+import { useCart } from '@/contexts/CartContext';
 interface CartSyncContextType {
     lastUpdate: number;
     forceSync: () => void;
@@ -23,8 +24,8 @@ export function CartSyncProvider({ children }: CartSyncProviderProps) {
     const forceSync = () => {
         setLastUpdate(Date.now());
         // Déclencher un événement global
-        window.dispatchEvent(new CustomEvent('forceCartSync', { 
-            detail: { timestamp: Date.now() } 
+        window.dispatchEvent(new CustomEvent('forceCartSync', {
+            detail: { timestamp: Date.now() }
         }));
     };
 
