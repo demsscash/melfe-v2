@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useCartActions } from '@/hooks/useCartSync'; import { ShoppingBag, Menu, X, Search, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useCart } from '@/contexts/CartContext';
 import {
     Sheet,
     SheetContent,

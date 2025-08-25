@@ -7,6 +7,7 @@ import { WooCommerceProduct } from '@/types/woocommerce';
 import { useCartActions } from '@/hooks/useCartSync'; import { formatPrice, isOnSale, getDiscountPercentage } from '@/lib/woocommerce';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useCart } from '@/contexts/CartContext';
 import {
     Select,
     SelectContent,
