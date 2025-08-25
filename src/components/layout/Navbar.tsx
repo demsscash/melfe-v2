@@ -224,7 +224,7 @@ export function Navbar() {
                                             </Button>
                                         </Link>
                                     ) : (
-                                        <Link href="/connexion">
+                                        <Link href="/auth/login">
                                             <Button
                                                 variant="ghost"
                                                 size="sm"
