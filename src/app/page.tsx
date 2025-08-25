@@ -1,6 +1,8 @@
 // src/app/page.tsx
 
 import { Suspense } from 'react';
+import React from 'react';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { WooCommerceService } from '@/lib/woocommerce';
