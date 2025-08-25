@@ -50,7 +50,7 @@ export default async function HomePage(): Promise<JSX.Element> {
             <div className="lg:row-span-2">
               <div className="relative h-[600px] lg:h-[824px] overflow-hidden rounded-lg group cursor-pointer">
                 <Image
-                  src="/images/melhfa-featured-1.jpg"
+                  src="/images/melf2.jpg"
                   alt="Collection Sahara"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -82,7 +82,7 @@ export default async function HomePage(): Promise<JSX.Element> {
             <div className="space-y-6">
               <div className="relative h-[400px] overflow-hidden rounded-lg group cursor-pointer">
                 <Image
-                  src="/images/melhfa-featured-2.jpg"
+                  src="/images/melf.jpg"
                   alt="Melhfa Élégance"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -97,7 +97,7 @@ export default async function HomePage(): Promise<JSX.Element> {
 
               <div className="relative h-[400px] overflow-hidden rounded-lg group cursor-pointer">
                 <Image
-                  src="/images/melhfa-featured-3.jpg"
+                  src="/images/melf3.jpg"
                   alt="Melhfa Océan"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"

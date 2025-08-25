@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
-import { useCart } from '@/contexts/CartContext'; // Import depuis le Context
+import { useCart } from '@/contexts/CartContext';
 import { useHydration } from '@/hooks/useHydration';
 import { Button } from '@/components/ui/button';
 import {
@@ -28,76 +28,104 @@ interface NavigationItem {
     children?: NavigationItem[];
 }
 
+// ✅ NAVIGATION UNIFIÉE - Tous les liens ont le même niveau et design
 const navigation: NavigationItem[] = [
     {
-        name: 'FEMMES',
-        href: '/femmes',
+        name: 'NOUVELLE COLLECTION',
+        href: '/boutique?filter=new',
         children: [
-            { name: 'NOUVELLES ARRIVÉES', href: '/femmes/nouvelles-arrivees' },
-            { name: 'VOILES TRADITIONNELLES', href: '/femmes/voiles-traditionnelles' },
-            { name: 'COLLECTION MODERNE', href: '/femmes/collection-moderne' },
-            { name: 'OCCASIONS SPÉCIALES', href: '/femmes/occasions-speciales' },
+            { name: 'VOILES NOUVEAUTÉS', href: '/boutique?filter=new&category=voiles' },
+            { name: 'ROBES NOUVEAUTÉS', href: '/boutique?filter=new&category=robes' },
+            { name: 'BODY NOUVEAUTÉS', href: '/boutique?filter=new&category=body' },
         ]
     },
     {
-        name: 'HOMMES',
-        href: '/hommes',
+        name: 'COLLABS',
+        href: '/boutique?category=collabs',
         children: [
-            { name: 'NOUVEAUTÉS', href: '/hommes/nouveautes' },
-            { name: 'BOUBOUS', href: '/hommes/boubous' },
-            { name: 'ACCESSOIRES', href: '/hommes/accessoires' },
+            { name: 'ARTISTES LOCAUX', href: '/boutique?category=collabs-artistes' },
+            { name: 'DESIGNERS INTERNATIONAUX', href: '/boutique?category=collabs-designers' },
+            { name: 'ÉDITIONS LIMITÉES', href: '/boutique?category=collabs-limited' },
         ]
     },
     {
-        name: 'ENFANTS',
-        href: '/enfants',
+        name: 'ENSEMBLES',
+        href: '/boutique?category=ensembles',
         children: [
-            { name: 'FILLES', href: '/enfants/filles' },
-            { name: 'GARÇONS', href: '/enfants/garcons' },
-            { name: 'NOUVEAUTÉS ENFANTS', href: '/enfants/nouveautes' },
+            { name: 'VOILE/ROBE/BODY', href: '/boutique?category=ensembles-complets' },
+            { name: 'VOILE + ROBE', href: '/boutique?category=ensembles-voile-robe' },
+            { name: 'ROBE + BODY', href: '/boutique?category=ensembles-robe-body' },
         ]
     },
     {
-        name: 'MAISON',
-        href: '/maison',
+        name: 'BELLAH PERSI',
+        href: '/boutique?category=bellah-persi',
         children: [
-            { name: 'DÉCORATION', href: '/maison/decoration' },
-            { name: 'TEXTILES', href: '/maison/textiles' },
-            { name: 'ARTISANAT', href: '/maison/artisanat' },
+            { name: 'VOILES PERSI', href: '/boutique?category=bellah-persi-voiles' },
+            { name: 'ROBES PERSI', href: '/boutique?category=bellah-persi-robes' },
+            { name: 'ACCESSOIRES PERSI', href: '/boutique?category=bellah-persi-accessoires' },
         ]
     },
     {
-        name: 'COLLECTIONS',
-        href: '/collections',
+        name: 'BELLAH DUBAI 1',
+        href: '/boutique?category=bellah-dubai-1',
         children: [
-            { name: 'NOUVELLE COLLECTION', href: '/collections/nouvelle' },
-            { name: 'HÉRITAGE MAURITANIEN', href: '/collections/heritage' },
-            { name: 'ÉDITION LIMITÉE', href: '/collections/edition-limitee' },
+            { name: 'COLLECTION PREMIUM', href: '/boutique?category=bellah-dubai-1-premium' },
+            { name: 'ÉDITION CLASSIQUE', href: '/boutique?category=bellah-dubai-1-classique' },
+            { name: 'ACCESSOIRES DUBAI 1', href: '/boutique?category=bellah-dubai-1-accessoires' },
+        ]
+    },
+    // ✅ ANCIENS LIENS SECONDAIRES MAINTENANT AU MÊME NIVEAU
+    {
+        name: 'BELLAH DUBAI 2',
+        href: '/boutique?category=bellah-dubai-2',
+        children: [
+            { name: 'COLLECTION PREMIUM', href: '/boutique?category=bellah-dubai-2-premium' },
+            { name: 'ÉDITION CLASSIQUE', href: '/boutique?category=bellah-dubai-2-classique' },
+            { name: 'ACCESSOIRES DUBAI 2', href: '/boutique?category=bellah-dubai-2-accessoires' },
+        ]
+    },
+    {
+        name: 'ROBES',
+        href: '/boutique?category=robes',
+        children: [
+            { name: 'ROBES CLASSIQUES', href: '/boutique?category=robes-classiques' },
+            { name: 'ROBES MODERNES', href: '/boutique?category=robes-modernes' },
+            { name: 'ROBES DE CÉRÉMONIE', href: '/boutique?category=robes-ceremonie' },
+        ]
+    },
+    {
+        name: 'BODY',
+        href: '/boutique?category=body',
+        children: [
+            { name: 'BODY CLASSIQUES', href: '/boutique?category=body-classiques' },
+            { name: 'BODY MODERNES', href: '/boutique?category=body-modernes' },
+            { name: 'BODY PREMIUM', href: '/boutique?category=body-premium' },
+        ]
+    },
+    {
+        name: 'SOLDES',
+        href: '/boutique?filter=sale',
+        children: [
+            { name: 'VOILES EN SOLDES', href: '/boutique?filter=sale&category=voiles' },
+            { name: 'ROBES EN SOLDES', href: '/boutique?filter=sale&category=robes' },
+            { name: 'ACCESSOIRES EN SOLDES', href: '/boutique?filter=sale&category=accessoires' },
         ]
     }
 ];
 
-const secondaryLinks = [
-    { name: 'MEILLEURES VENTES', href: '/meilleures-ventes' },
-    { name: 'PRIX SPÉCIAUX', href: '/promotions' },
-    { name: 'ARTISANS', href: '/artisans' },
-    { name: 'À PROPOS', href: '/a-propos' }
-];
-
 export function Navbar() {
     const { user, isAuthenticated, logout, isLoading } = useAuth();
-    const { cart, getItemCount } = useCart(); // Utilise le Context maintenant
+    const { cart, getItemCount } = useCart();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isCartPreviewOpen, setIsCartPreviewOpen] = useState(false);
     const isHydrated = useHydration();
 
-    // Le compteur vient directement du Context partagé
     const cartCount = cart?.itemCount || 0;
 
     console.log('🏠 Navbar Context - cartCount:', cartCount, 'cart:', cart);
 
-    // Délai pour fermer l'aperçu panier
     const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null);
 
     const handleMouseEnterCart = () => {
@@ -111,7 +139,7 @@ export function Navbar() {
     const handleMouseLeaveCart = () => {
         const timeout = setTimeout(() => {
             setIsCartPreviewOpen(false);
-        }, 200); // Délai de 200ms pour permettre le passage vers l'aperçu
+        }, 200);
         setCloseTimeout(timeout);
     };
 
@@ -124,7 +152,6 @@ export function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Nettoyer le timeout au démontage
     useEffect(() => {
         return () => {
             if (closeTimeout) {
@@ -133,7 +160,6 @@ export function Navbar() {
         };
     }, [closeTimeout]);
 
-    // Bloquer le scroll quand le menu est ouvert
     useEffect(() => {
         if (isMobileMenuOpen) {
             document.body.style.overflow = 'hidden';
@@ -149,15 +175,14 @@ export function Navbar() {
     return (
         <>
             <nav
-                className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-                    isScrolled
-                        ? 'bg-white/95 backdrop-blur-md shadow-sm'
-                        : 'bg-white/90 backdrop-blur-sm'
-                }`}
+                className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled
+                    ? 'bg-white/95 backdrop-blur-md shadow-sm'
+                    : 'bg-white/90 backdrop-blur-sm'
+                    }`}
             >
                 <div className="max-w-[1400px] mx-auto px-4 md:px-6">
                     <div className="flex items-center justify-between h-16">
-                        {/* Menu Burger - À gauche comme Zara */}
+                        {/* Menu Burger */}
                         <Button
                             variant="ghost"
                             size="sm"
@@ -212,8 +237,8 @@ export function Navbar() {
                                 </>
                             )}
 
-                            {/* Panier avec hover amélioré */}
-                            <div 
+                            {/* Panier */}
+                            <div
                                 className="relative"
                                 onMouseEnter={handleMouseEnterCart}
                                 onMouseLeave={handleMouseLeaveCart}
@@ -235,9 +260,9 @@ export function Navbar() {
                                         )}
                                     </Button>
                                 </Link>
-                                
-                                <CartPreview 
-                                    isOpen={isCartPreviewOpen} 
+
+                                <CartPreview
+                                    isOpen={isCartPreviewOpen}
                                     onClose={() => setIsCartPreviewOpen(false)}
                                     onMouseEnter={handleMouseEnterCart}
                                     onMouseLeave={handleMouseLeaveCart}
@@ -248,13 +273,12 @@ export function Navbar() {
                 </div>
             </nav>
 
-            {/* Menu Overlay - Style Zara */}
+            {/* Menu Overlay */}
             {isMobileMenuOpen && (
                 <div className="fixed inset-0 z-[100] bg-white">
-                    {/* Header du menu - Position exacte comme la navbar */}
+                    {/* Header du menu */}
                     <div className="max-w-[1400px] mx-auto px-4 md:px-6">
                         <div className="flex items-center justify-between h-16">
-                            {/* Bouton X à la même position que le burger */}
                             <Button
                                 variant="ghost"
                                 size="sm"
@@ -264,7 +288,6 @@ export function Navbar() {
                                 <X className="w-5 h-5" />
                             </Button>
 
-                            {/* Logo Central - même position */}
                             <Link
                                 href="/"
                                 onClick={() => setIsMobileMenuOpen(false)}
@@ -273,20 +296,18 @@ export function Navbar() {
                                 MELHFA
                             </Link>
 
-                            {/* Spacer pour équilibrer */}
                             <div className="w-8" />
                         </div>
                     </div>
-                    
-                    {/* Ligne de séparation */}
+
                     <div className="border-b border-gray-100"></div>
 
                     {/* Contenu du menu */}
                     <div className="flex h-[calc(100vh-64px)]">
-                        {/* Navigation principale - Gauche */}
+                        {/* Navigation principale */}
                         <div className="flex-1 p-6 md:p-8 overflow-y-auto">
                             <nav className="space-y-8">
-                                {/* Catégories principales */}
+                                {/* ✅ TOUTES LES CATÉGORIES AVEC LE MÊME DESIGN */}
                                 <div className="space-y-6">
                                     {navigation.map((category) => (
                                         <div key={category.name} className="space-y-3">
@@ -297,7 +318,7 @@ export function Navbar() {
                                             >
                                                 {category.name}
                                             </Link>
-                                            
+
                                             {/* Sous-catégories */}
                                             {category.children && (
                                                 <div className="space-y-2 ml-4">
@@ -317,22 +338,6 @@ export function Navbar() {
                                     ))}
                                 </div>
 
-                                {/* Séparateur */}
-                                <div className="border-t border-gray-200 pt-6">
-                                    <div className="space-y-4">
-                                        {secondaryLinks.map((link) => (
-                                            <Link
-                                                key={link.name}
-                                                href={link.href}
-                                                onClick={() => setIsMobileMenuOpen(false)}
-                                                className="block text-sm font-light tracking-wide text-black hover:opacity-60 transition-opacity uppercase"
-                                            >
-                                                {link.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
-
                                 {/* Actions utilisateur */}
                                 <div className="border-t border-gray-200 pt-6 space-y-4">
                                     {isHydrated && !isLoading && (
@@ -347,7 +352,7 @@ export function Navbar() {
                                                         <User className="w-4 h-4" />
                                                         <span>MON COMPTE</span>
                                                     </Link>
-                                                    
+
                                                     <Link
                                                         href="/account?tab=orders"
                                                         onClick={() => setIsMobileMenuOpen(false)}
@@ -389,7 +394,7 @@ export function Navbar() {
                                             )}
                                         </>
                                     )}
-                                    
+
                                     <Link
                                         href="/aide"
                                         onClick={() => setIsMobileMenuOpen(false)}
@@ -401,7 +406,7 @@ export function Navbar() {
                             </nav>
                         </div>
 
-                        {/* Image ou contenu à droite - optionnel comme Zara */}
+                        {/* Image à droite */}
                         <div className="hidden lg:block w-1/2 bg-gray-50">
                             <div className="h-full flex items-center justify-center p-8">
                                 <div className="text-center space-y-4">

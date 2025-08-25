@@ -65,7 +65,7 @@ export default function HeroSection(): JSX.Element {
                             {/* Image principale */}
                             <div className="relative h-[600px] lg:h-[700px] w-full rounded-2xl overflow-hidden shadow-2xl">
                                 <Image
-                                    src="/images/melhfa-hero.jpg"
+                                    src="/images/melf2.jpg"
                                     alt="Melhfa Élégante"
                                     fill
                                     className="object-cover"
@@ -86,7 +86,7 @@ export default function HeroSection(): JSX.Element {
                                 <div className="space-y-4">
                                     <div className="relative h-24 w-full rounded-lg overflow-hidden">
                                         <Image
-                                            src="/images/melhfa-thumbnail.jpg"
+                                            src="/images/melf2.jpg"
                                             alt="Melhfa Premium"
                                             fill
                                             className="object-cover"

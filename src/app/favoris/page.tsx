@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useWishlist } from '@/contexts/WishlistContext';
+
 import { useCart } from '@/contexts/CartContext';
 import { formatPrice } from '@/lib/woocommerce';
 import { Button } from '@/components/ui/button';
@@ -130,7 +130,7 @@ export default function FavorisPage() {
                                 {/* Informations produit */}
                                 <div className="p-4 space-y-3">
                                     <div className="space-y-1">
-                                        <Link 
+                                        <Link
                                             href={`/produit/${item.slug}`}
                                             className="hover:text-black transition-colors"
                                         >
@@ -168,8 +168,8 @@ export default function FavorisPage() {
                                             onClick={() => handleAddToCart(item)}
                                             className={cn(
                                                 "flex-1 transition-all duration-300",
-                                                isInCart(item.id) 
-                                                    ? "bg-green-600 hover:bg-green-700 text-white" 
+                                                isInCart(item.id)
+                                                    ? "bg-green-600 hover:bg-green-700 text-white"
                                                     : "bg-black hover:bg-gray-800 text-white"
                                             )}
                                         >
