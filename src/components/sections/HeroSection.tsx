@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight } from 'lucide-react';
 
-export default function HeroSection(): JSX.Element {
+export default function HeroSection() {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {

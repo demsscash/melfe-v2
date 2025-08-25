@@ -25,7 +25,7 @@ const navigation: NavigationItem[] = [
     { name: 'Accessoires', href: '/accessoires' },
 ];
 
-export default function Header(): JSX.Element {
+export default function Header() {
     const { getItemCount } = useCart();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

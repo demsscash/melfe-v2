@@ -50,7 +50,7 @@ export default function ProductFilters({
     currentSort = 'date-desc',
     // ✅ AJOUT : Props prix avec valeur par défaut
     currentPriceRange = [0, 100000]
-}: ProductFiltersProps): JSX.Element {
+}: ProductFiltersProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 

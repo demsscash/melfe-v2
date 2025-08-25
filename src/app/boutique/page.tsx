@@ -381,7 +381,7 @@ export default async function BoutiquePageBoutiquePage({
 }
 
 // Composants de skeleton
-function FiltersSkeleton(): JSX.Element {
+function FiltersSkeleton() {
     return (
         <div className="space-y-6">
             <div className="space-y-3">
@@ -396,7 +396,7 @@ function FiltersSkeleton(): JSX.Element {
     );
 }
 
-function ProductGridSkeleton(): JSX.Element {
+function ProductGridSkeleton() {
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {[...Array(12)].map((_, i) => (

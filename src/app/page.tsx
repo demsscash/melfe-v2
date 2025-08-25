@@ -14,11 +14,11 @@ import { ArrowRight, Star, Truck, Shield, Heart } from 'lucide-react';
 
 // Composants pour les sections de la page d'accueil
 import HeroSection from '@/components/sections/HeroSection';
-import FeaturedProductsSection from '@/components/sections/FeaturedProductsSection';
+//import FeaturedProductsSection from '@/components/sections/FeaturedProductsSection';
 import PromoSection from '@/components/sections/PromoSection';
 import NewsletterSection from '@/components/sections/NewsletterSection';
 
-export default async function HomePage(): Promise<JSX.Element> {
+export default async function HomePage() {
   // Récupérer les données des produits
   const [featuredProducts, saleProducts, newArrivals] = await Promise.all([
     WooCommerceService.getFeaturedProducts(6),
@@ -199,7 +199,7 @@ export default async function HomePage(): Promise<JSX.Element> {
 }
 
 // Composant de skeleton pour le chargement
-function ProductGridSkeleton(): JSX.Element {
+function ProductGridSkeleton() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {[...Array(8)].map((_, i) => (
