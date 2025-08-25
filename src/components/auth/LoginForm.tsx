@@ -22,7 +22,10 @@ const loginSchema = z.object({
     password: z.string().min(6, 'Le mot de passe doit contenir au moins 6 caractères'),
 });
 
-type LoginFormData = z.infer<typeof loginSchema>;
+type LoginFormData = {
+    username: string;
+    password: string;
+};
 
 export default function LoginForm() {
     const { login, isLoading } = useAuth();
