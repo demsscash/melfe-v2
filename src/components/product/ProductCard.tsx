@@ -13,10 +13,12 @@ import { Badge } from '@/components/ui/badge';
 import { Eye, ShoppingBag, Heart, Plus, Minus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+// ✅ INTERFACE CORRIGÉE avec support de style
 interface ProductCardProps {
     product: WooCommerceProduct;
     className?: string;
     showQuickView?: boolean;
+    style?: React.CSSProperties; // ✅ AJOUT de la propriété style
 }
 
 interface ColorOption {
@@ -27,7 +29,8 @@ interface ColorOption {
 export default function ProductCard({
     product,
     className = '',
-    showQuickView = true
+    showQuickView = true,
+    style // ✅ AJOUT du paramètre style
 }: ProductCardProps) {
     const { addToCart, isInCart, getItemQuantity, updateQuantity, removeFromCart } = useCart();
     const [isHovered, setIsHovered] = useState(false);
@@ -93,6 +96,7 @@ export default function ProductCard({
                 "group relative bg-white transition-all duration-300 hover:shadow-lg",
                 className
             )}
+            style={style} // ✅ APPLICATION du style au conteneur principal
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -152,7 +156,7 @@ export default function ProductCard({
                     size="sm"
                     className={cn(
                         "absolute top-4 right-4 w-8 h-8 p-0 bg-white/80 hover:bg-white transition-all duration-300",
-                        isHovered ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                        isHovered ? "opacity-100" : "opacity-0"
                     )}
                 >
                     <Heart className="w-4 h-4" />
@@ -161,115 +165,99 @@ export default function ProductCard({
 
             {/* Product Info */}
             <div className="p-4 space-y-3">
-                <div>
-                    <Link
-                        href={`/produit/${product.slug}`}
-                        className="group"
-                    >
-                        <h3 className="text-sm font-medium text-black group-hover:opacity-70 transition-opacity tracking-wide uppercase">
-                            {product.name}
-                        </h3>
-                    </Link>
-
-                    {/* Prix */}
-                    <div className="flex items-center gap-2 mt-1">
-                        {isOnSale(product) ? (
-                            <>
-                                <span className="text-base font-medium text-black">
-                                    {formatPrice(product.sale_price)}
-                                </span>
-                                <span className="text-sm text-gray-500 line-through">
-                                    {formatPrice(product.regular_price)}
-                                </span>
-                            </>
-                        ) : (
-                            <span className="text-base font-medium text-black">
-                                {formatPrice(product.price)}
-                            </span>
-                        )}
-                    </div>
-                </div>
-
-                {/* Couleurs disponibles */}
+                {/* Colors */}
                 {colorOptions.length > 0 && (
-                    <div className="flex items-center gap-2">
+                    <div className="flex gap-2">
                         {colorOptions.slice(0, 4).map((color, index) => (
                             <button
                                 key={index}
-                                onClick={() => setSelectedColor(color.name)}
                                 className={cn(
-                                    "w-4 h-4 rounded-full border-2 transition-all duration-200 hover:scale-110",
-                                    selectedColor === color.name
-                                        ? "border-black shadow-md"
-                                        : "border-gray-200"
+                                    "w-4 h-4 rounded-full border transition-all duration-200 hover:scale-110",
+                                    selectedColor === color.name ? "ring-2 ring-black ring-offset-1" : "border-gray-300"
                                 )}
                                 style={{ backgroundColor: color.hex }}
+                                onClick={() => setSelectedColor(color.name)}
                                 title={color.name}
                             />
                         ))}
                         {colorOptions.length > 4 && (
-                            <span className="text-xs text-gray-500 ml-1">
+                            <span className="text-xs text-gray-500 self-center">
                                 +{colorOptions.length - 4}
                             </span>
                         )}
                     </div>
                 )}
 
-                {/* Cart Actions */}
-                {!productInCart ? (
-                    /* Bouton d'ajout normal */
-                    <Button
-                        onClick={handleAddToCart}
-                        disabled={isAddingToCart || !product.purchasable}
-                        className="w-full bg-black text-white hover:bg-gray-800 text-xs uppercase tracking-wide transition-all duration-300"
-                    >
-                        {isAddingToCart ? "Ajout..." : "Ajouter au panier"}
-                    </Button>
-                ) : (
-                    /* Contrôles de quantité quand le produit est dans le panier */
-                    <div className="space-y-2">
-                        {/* Indicateur dans le panier */}
-                        <div className="flex items-center justify-center gap-2 p-2 bg-green-50 border border-green-200 rounded text-green-800 text-xs">
-                            <ShoppingBag className="w-3 h-3" />
-                            <span>Dans le panier ({currentQuantity})</span>
-                        </div>
+                {/* Product Name */}
+                <Link href={`/produit/${product.slug}`}>
+                    <h3 className="font-medium text-sm text-gray-900 hover:text-black transition-colors leading-tight line-clamp-2">
+                        {product.name}
+                    </h3>
+                </Link>
 
-                        {/* Contrôles de quantité */}
-                        <div className="flex items-center gap-2">
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => handleQuantityChange(currentQuantity - 1)}
-                                className="flex-1 h-8"
-                            >
-                                <Minus className="w-3 h-3" />
-                            </Button>
-
-                            <span className="px-3 py-1 bg-gray-100 rounded text-sm font-medium min-w-[2rem] text-center">
-                                {currentQuantity}
+                {/* Price */}
+                <div className="flex items-center gap-2">
+                    {isOnSale(product) ? (
+                        <>
+                            <span className="text-red-600 font-semibold text-lg">
+                                {formatPrice(product.sale_price)}
                             </span>
+                            <span className="text-gray-400 text-sm line-through">
+                                {formatPrice(product.regular_price)}
+                            </span>
+                        </>
+                    ) : (
+                        <span className="text-gray-900 font-semibold text-lg">
+                            {formatPrice(product.price)}
+                        </span>
+                    )}
+                </div>
 
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => handleQuantityChange(currentQuantity + 1)}
-                                className="flex-1 h-8"
-                            >
-                                <Plus className="w-3 h-3" />
-                            </Button>
-
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={handleRemoveFromCart}
-                                className="h-8 px-2 text-red-600 hover:text-red-700 hover:bg-red-50"
-                                title="Supprimer du panier"
-                            >
-                                <Trash2 className="w-3 h-3" />
-                            </Button>
+                {/* Add to Cart Section */}
+                <div className="pt-2">
+                    {productInCart ? (
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="w-8 h-8 p-0"
+                                    onClick={() => handleQuantityChange(currentQuantity - 1)}
+                                >
+                                    {currentQuantity === 1 ? <Trash2 className="w-3 h-3" /> : <Minus className="w-3 h-3" />}
+                                </Button>
+                                <span className="text-sm font-medium min-w-[2rem] text-center">
+                                    {currentQuantity}
+                                </span>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="w-8 h-8 p-0"
+                                    onClick={() => handleQuantityChange(currentQuantity + 1)}
+                                >
+                                    <Plus className="w-3 h-3" />
+                                </Button>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    ) : (
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full text-sm hover:bg-black hover:text-white transition-colors"
+                            onClick={handleAddToCart}
+                            disabled={isAddingToCart}
+                        >
+                            {isAddingToCart ? (
+                                "Ajout..."
+                            ) : (
+                                <>
+                                    <ShoppingBag className="w-4 h-4 mr-2" />
+                                    Ajouter au panier
+                                </>
+                            )}
+                        </Button>
+                    )}
+                </div>
             </div>
         </div>
     );
