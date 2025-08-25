@@ -20,30 +20,30 @@ export const metadata: Metadata = {
 };
 
 interface BoutiquePageProps {
-    searchParams: {
+    searchParams: Promise<{
         page?: string;
         category?: string;
         filter?: string;
         sort?: string;
         search?: string;
-        // ✅ AJOUT : Paramètres prix
         price_min?: string;
         price_max?: string;
-    };
+    }>
 }
 
-export default async function BoutiquePage({
+export default async function BoutiquePageBoutiquePage({
     searchParams
 }: BoutiquePageProps): Promise<JSX.Element> {
-    const page = Number(searchParams.page) || 1;
-    const categorySlug = searchParams.category; // ✅ Récupéré depuis l'URL
-    const filter = searchParams.filter;
-    const sort = searchParams.sort;
-    const search = searchParams.search;
+    const params = await searchParams;
+    const page = Number(params.page) || 1;
+    const categorySlug = params.category; // ✅ Récupéré depuis l'URL
+    const filter = params.filter;
+    const sort = params.sort;
+    const search = params.search;
 
     // ✅ AJOUT : Paramètres prix
-    const priceMin = searchParams.price_min ? Number(searchParams.price_min) : undefined;
-    const priceMax = searchParams.price_max ? Number(searchParams.price_max) : undefined;
+    const priceMin = params.price_min ? Number(params.price_min) : undefined;
+    const priceMax = params.price_max ? Number(params.price_max) : undefined;
 
     console.log('🔍 BoutiquePage - Paramètres reçus:', {
         page,
