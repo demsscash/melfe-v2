@@ -6,149 +6,157 @@ import { WooCommerceProduct } from '@/types/woocommerce';
 import ProductCard from './ProductCard';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useRef, useState } from 'react';
-import { cn } from '@/lib/utils';
+import { useRef, useState, useEffect } from 'react';
 
 interface RelatedProductsProps {
     products: WooCommerceProduct[];
+    currentProductId: number;
     title?: string;
-    className?: string;
 }
 
 export default function RelatedProducts({
     products,
-    title = "Produits similaires",
-    className = ''
+    currentProductId,
+    title = "Produits similaires"
 }: RelatedProductsProps) {
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
-    const [canScrollRight, setCanScrollRight] = useState(true);
+    const [canScrollRight, setCanScrollRight] = useState(false);
 
-    const checkScrollButtons = (): void => {
-        if (scrollContainerRef.current) {
-            const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+    // Filtrer les produits pour exclure le produit actuel
+    const filteredProducts = products.filter(product => product.id !== currentProductId);
+
+    // Vérifier les possibilités de scroll
+    const checkScroll = () => {
+        if (scrollRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
             setCanScrollLeft(scrollLeft > 0);
             setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
         }
     };
 
-    const scrollLeft = (): void => {
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollBy({
-                left: -320, // Largeur d'une carte + gap
+    useEffect(() => {
+        checkScroll();
+        const handleResize = () => checkScroll();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [filteredProducts]);
+
+    const scroll = (direction: 'left' | 'right') => {
+        if (scrollRef.current) {
+            const scrollAmount = 320; // largeur d'une carte + gap
+            const currentScroll = scrollRef.current.scrollLeft;
+            const newScroll = direction === 'left'
+                ? currentScroll - scrollAmount
+                : currentScroll + scrollAmount;
+
+            scrollRef.current.scrollTo({
+                left: newScroll,
                 behavior: 'smooth'
             });
+
+            // Mettre à jour les boutons après l'animation
+            setTimeout(checkScroll, 300);
         }
     };
 
-    const scrollRight = (): void => {
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollBy({
-                left: 320, // Largeur d'une carte + gap
-                behavior: 'smooth'
-            });
-        }
-    };
-
-    if (products.length === 0) {
-        return <></>;
+    if (filteredProducts.length === 0) {
+        return null;
     }
 
     return (
-        <section className={cn('space-y-8', className)}>
-            {/* Header */}
+        <section className="space-y-6">
+            {/* Header avec navigation */}
             <div className="flex items-center justify-between">
-                <h2 className="text-2xl md:text-3xl font-light tracking-wide">
+                <h2 className="text-2xl font-light tracking-wide">
                     {title}
                 </h2>
 
-                {/* Navigation Buttons - Desktop */}
-                <div className="hidden md:flex items-center gap-2">
+                {/* Boutons de navigation - cachés sur mobile */}
+                <div className="hidden md:flex gap-2">
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={scrollLeft}
+                        onClick={() => scroll('left')}
                         disabled={!canScrollLeft}
-                        className="p-2 h-9 w-9"
+                        className="h-9 w-9 p-0"
                     >
                         <ChevronLeft className="w-4 h-4" />
                     </Button>
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={scrollRight}
+                        onClick={() => scroll('right')}
                         disabled={!canScrollRight}
-                        className="p-2 h-9 w-9"
+                        className="h-9 w-9 p-0"
                     >
                         <ChevronRight className="w-4 h-4" />
                     </Button>
                 </div>
             </div>
 
-            {/* Products Scroll Container */}
+            {/* Container scrollable */}
             <div className="relative">
                 <div
-                    ref={scrollContainerRef}
-                    className="flex gap-6 overflow-x-auto hide-scrollbar pb-4"
-                    onScroll={checkScrollButtons}
-                    style={{ scrollSnapType: 'x mandatory' }}
+                    ref={scrollRef}
+                    className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
+                    onScroll={checkScroll}
+                    style={{
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none',
+                    }}
                 >
-                    {products.map((product, index) => (
+                    {filteredProducts.map((product) => (
                         <div
                             key={product.id}
-                            className="flex-none w-72 md:w-80"
-                            style={{ scrollSnapAlign: 'start' }}
+                            className="flex-shrink-0 w-72 md:w-80"
                         >
                             <ProductCard
                                 product={product}
-                                className="h-full animate-fade-in-up"
-                                style={{
-                                    animationDelay: `${index * 100}ms`,
-                                    animationFillMode: 'both'
-                                }}
+                                showQuickView={false}
+                                className="h-full"
                             />
                         </div>
                     ))}
                 </div>
 
-                {/* Gradient Overlays */}
-                <div className="absolute left-0 top-0 bottom-4 w-8 bg-gradient-to-r from-gray-50 to-transparent pointer-events-none" />
-                <div className="absolute right-0 top-0 bottom-4 w-8 bg-gradient-to-l from-gray-50 to-transparent pointer-events-none" />
+                {/* Indicateurs de scroll pour mobile */}
+                {filteredProducts.length > 1 && (
+                    <div className="md:hidden flex justify-center gap-2 mt-4">
+                        <div className="flex gap-1">
+                            {Array.from({ length: Math.ceil(filteredProducts.length / 2) }).map((_, index) => (
+                                <div
+                                    key={index}
+                                    className="w-2 h-2 rounded-full bg-gray-300"
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Gradients de fade pour indiquer le scroll */}
+                {canScrollLeft && (
+                    <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
+                )}
+                {canScrollRight && (
+                    <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
+                )}
             </div>
 
-            {/* Mobile Navigation Dots */}
-            <div className="flex justify-center gap-2 md:hidden">
-                {products.map((_, index) => (
-                    <button
-                        key={index}
-                        className={cn(
-                            "w-2 h-2 rounded-full transition-all duration-300",
-                            index === 0 ? "bg-black" : "bg-gray-300" // En production, calculer l'index actuel
-                        )}
-                        onClick={() => {
-                            if (scrollContainerRef.current) {
-                                scrollContainerRef.current.scrollTo({
-                                    left: index * 320,
-                                    behavior: 'smooth'
-                                });
-                            }
-                        }}
-                    />
-                ))}
-            </div>
-
-            {/* Alternative: Grid Layout for smaller screens */}
-            <div className="md:hidden">
-                <div className="grid grid-cols-2 gap-4 mt-8">
-                    {products.slice(0, 4).map((product) => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                            className="w-full"
-                        />
-                    ))}
+            {/* Message si peu de produits */}
+            {filteredProducts.length < 3 && (
+                <div className="text-center py-8">
+                    <p className="text-gray-600">
+                        Découvrez plus de produits dans notre{' '}
+                        <a
+                            href="/boutique"
+                            className="text-black hover:underline font-medium"
+                        >
+                            boutique complète
+                        </a>
+                    </p>
                 </div>
-            </div>
+            )}
         </section>
     );
 }
