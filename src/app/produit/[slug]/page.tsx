@@ -265,41 +265,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                     </div>
                 )}
 
-                {/* Bouton fixe mobile pour ajout panier */}
-                <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 z-10">
-                    <div className="flex items-center justify-between gap-4">
-                        <div className="flex flex-col">
-                            <span className="text-sm text-gray-600">Prix</span>
-                            <div className="flex items-center gap-2">
-                                {isOnSale(product) ? (
-                                    <>
-                                        <span className="text-lg font-semibold text-red-600">
-                                            {formatPrice(product.sale_price)}
-                                        </span>
-                                        <span className="text-sm text-gray-400 line-through">
-                                            {formatPrice(product.regular_price)}
-                                        </span>
-                                    </>
-                                ) : (
-                                    <span className="text-lg font-semibold">
-                                        {formatPrice(product.regular_price)}
-                                    </span>
-                                )}
-                            </div>
-                        </div>
 
-                        <Button
-                            size="lg"
-                            disabled={product.stock_status === 'outofstock'}
-                            className="flex-1 max-w-xs"
-                        >
-                            {product.stock_status === 'outofstock'
-                                ? 'Rupture de stock'
-                                : 'Ajouter au panier'
-                            }
-                        </Button>
-                    </div>
-                </div>
             </main>
 
             {/* Espacement pour le bouton fixe mobile */}
